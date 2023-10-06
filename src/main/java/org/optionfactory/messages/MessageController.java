@@ -1,8 +1,6 @@
 package org.optionfactory.messages;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,12 +22,12 @@ public class MessageController {
     }
 
     @PutMapping(value = "/edit/{id}")
-    public Long editMessage() {
-        return null;
+    public void editMessage(@PathVariable Long id, @RequestBody MessageRequest messageRequest) {
+        messageFacade.update(id, messageRequest);
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    public Long deleteMessage() {
-        return null;
+    public void deleteMessage(@PathVariable Long id, @RequestBody MessageRequest messageRequest) {
+        messageFacade.delete(id, messageRequest);
     }
 }

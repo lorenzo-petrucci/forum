@@ -1,10 +1,7 @@
 package org.optionfactory.messages;
 
 import org.springframework.jdbc.core.JdbcOperations;
-import org.springframework.jdbc.core.RowMapper;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -36,7 +33,8 @@ public class JdbcMessageRepository implements MessageRepository{
         return jdbc.queryForObject("""
                 INSERT INTO message (author_id, thread_id, created_at, parent_id, body, image, is_active) 
                 VALUES(?, ?, ?, ?, ?, ?, ?)
-                RETURNING id""",
+                RETURNING id
+                """,
                 Long.class,
                 message.getAuthorId(),
                 message.getThreadId(),
@@ -49,11 +47,23 @@ public class JdbcMessageRepository implements MessageRepository{
 
     @Override
     public void update(Message message) {
-
+        jdbc.update("""
+                UPDATE message 
+                SET body = ? 
+                WHERE id = ?
+                """,
+                message.getBody(),
+                message.getId()
+        );
     }
 
     @Override
-    public Long delete(Message message) {
-        return null;
+    public void delete(Message message) {
+        jdbc.update("""
+                DELETE FROM message
+                WHERE id = ?
+                """,
+                message.getId()
+        );
     }
 }

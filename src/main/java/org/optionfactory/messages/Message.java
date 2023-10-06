@@ -10,9 +10,9 @@ public class Message {
     private final Long parentId;
     private final String body;
     private final byte[] image;
-    private final boolean isActive;
+    private final Boolean isActive;
 
-    private Message(Long id, Long authorId, Long threadId, Instant createdAt, Long parentId, String body, byte[] image, boolean isActive) {
+    private Message(Long id, Long authorId, Long threadId, Instant createdAt, Long parentId, String body, byte[] image, Boolean isActive) {
         this.id = id;
         this.authorId = authorId;
         this.threadId = threadId;
@@ -29,6 +29,10 @@ public class Message {
 
     public static Message withId(Long id, Long authorId, Long threadId, Instant createdAt, Long parentId, String body, byte[] image, boolean isActive) {
         return new Message(id, authorId, threadId, createdAt, parentId, body, image, isActive);
+    }
+
+    public static Message toUpdate(Long id, String body) {
+        return new Message(id, null, null, null, null, body, null, null);
     }
 
     public Long getId() {

@@ -6,6 +6,6 @@ public interface MessageRepository {
     List<Message> list();
     Long create(Message message);
     void update(Message message);
-    Long delete(Message message);
+    void delete(Message message);
 
 }

@@ -32,4 +32,16 @@ public class TransactionalMessageFacade implements MessageFacade{
                 true
         ));
     }
+
+    @Override
+    public void update(Long id, MessageRequest messageRequest) {
+        messageRepository.update(Message.toUpdate(id, messageRequest.body()));
+    }
+
+    @Override
+    public void delete(Long id, MessageRequest messageRequest) {
+        messageRepository.delete(Message.toUpdate(id, messageRequest.body()));
+    }
+
+
 }
