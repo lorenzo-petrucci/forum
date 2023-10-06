@@ -11,9 +11,9 @@ public class MessageController {
     @Autowired
     private MessageFacade messageFacade;
 
-    @GetMapping("/list")
-    public List<Message> listMessages() {
-        return messageFacade.list();
+    @GetMapping("/list/{threadId}")
+    public List<Message> listMessages(@PathVariable Long threadId) {
+        return messageFacade.list(threadId);
     }
 
     @PostMapping("/create")

@@ -14,8 +14,11 @@ public class JdbcMessageRepository implements MessageRepository{
 
 
     @Override
-    public List<Message> list() {
-        return jdbc.query("SELECT * FROM message",
+    public List<Message> list(Long threadId) {
+        return jdbc.query("""
+                        SELECT * FROM message
+                        WHERE thread_id = ?
+                        """,
                 (rs, rowNum) -> Message.withId(
                         rs.getLong("id"),
                         rs.getLong("author_id"),
@@ -25,13 +28,13 @@ public class JdbcMessageRepository implements MessageRepository{
                         rs.getString("body"),
                         rs.getBytes("image"),
                         rs.getBoolean("is_active")
-                ));
+                ), threadId);
     }
 
     @Override
     public Long create(Message message) {
         return jdbc.queryForObject("""
-                INSERT INTO message (author_id, thread_id, created_at, parent_id, body, image, is_active) 
+                INSERT INTO message (author_id, thread_id, created_at, parent_id, body, image, is_active)
                 VALUES(?, ?, ?, ?, ?, ?, ?)
                 RETURNING id
                 """,
@@ -48,8 +51,8 @@ public class JdbcMessageRepository implements MessageRepository{
     @Override
     public void update(Message message) {
         jdbc.update("""
-                UPDATE message 
-                SET body = ? 
+                UPDATE message
+                SET body = ?
                 WHERE id = ?
                 """,
                 message.getBody(),

@@ -16,8 +16,8 @@ public class TransactionalMessageFacade implements MessageFacade{
     }
 
     @Override
-    public List<Message> list() {
-        return messageRepository.list();
+    public List<Message> list(Long threadId) {
+        return messageRepository.list(threadId);
     }
 
     @Override

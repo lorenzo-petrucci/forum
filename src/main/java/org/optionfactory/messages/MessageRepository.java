@@ -3,7 +3,7 @@ package org.optionfactory.messages;
 import java.util.List;
 
 public interface MessageRepository {
-    List<Message> list();
+    List<Message> list(Long threadId);
     Long create(Message message);
     void update(Message message);
     void delete(Message message);
