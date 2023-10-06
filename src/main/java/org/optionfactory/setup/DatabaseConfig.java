@@ -1,8 +1,10 @@
 package org.optionfactory.setup;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import org.optionfactory.messages.JdbcMessageRepository;
-import org.optionfactory.messages.MessageRepository;
+import org.optionfactory.author.AuthorRepository;
+import org.optionfactory.author.JdbcAuthorRepository;
+import org.optionfactory.message.JdbcMessageRepository;
+import org.optionfactory.message.MessageRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -56,5 +58,10 @@ public class DatabaseConfig {
     @Bean
     public MessageRepository messageRepository(JdbcOperations jdbcOperations) {
         return new JdbcMessageRepository(jdbcOperations);
+    }
+
+    @Bean
+    public AuthorRepository authorRepository(JdbcOperations jdbcOperations) {
+        return new JdbcAuthorRepository(jdbcOperations);
     }
 }

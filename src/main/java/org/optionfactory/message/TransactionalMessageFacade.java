@@ -1,4 +1,4 @@
-package org.optionfactory.messages;
+package org.optionfactory.message;
 
 import org.springframework.transaction.annotation.Transactional;
 

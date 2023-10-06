@@ -1,8 +1,8 @@
 package org.optionfactory.setup;
 
-import org.optionfactory.messages.MessageFacade;
-import org.optionfactory.messages.MessageRepository;
-import org.optionfactory.messages.TransactionalMessageFacade;
+import org.optionfactory.message.MessageFacade;
+import org.optionfactory.message.MessageRepository;
+import org.optionfactory.message.TransactionalMessageFacade;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

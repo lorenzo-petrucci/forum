@@ -6,11 +6,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.optionfactory.Main;
+import org.optionfactory.WebAppInitializer;
 import org.springframework.context.annotation.*;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.ResourceHttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Controller;
@@ -25,7 +24,7 @@ import java.util.List;
 @PropertySource(value = "file:/opt/${project.name}/conf/git.properties", encoding = "UTF-8", ignoreResourceNotFound = true)
 @PropertySource(value = "file:${user.home}/.${project.name}.properties", encoding = "UTF-8", ignoreResourceNotFound = true)
 @PropertySource(value = "file:/opt/${project.name}/conf/project.properties", encoding = "UTF-8", ignoreResourceNotFound = true)
-@ComponentScan(basePackageClasses = Main.class, includeFilters = @Filter(type = FilterType.ANNOTATION, classes = Controller.class))
+@ComponentScan(basePackageClasses = WebAppInitializer.class, includeFilters = @Filter(type = FilterType.ANNOTATION, classes = Controller.class))
 @Configuration
 public class ApiConfig implements WebMvcConfigurer {
     @Bean
@@ -43,7 +42,6 @@ public class ApiConfig implements WebMvcConfigurer {
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-//        converters.add(new ResourceHttpMessageConverter());
         converters.add(new MappingJackson2HttpMessageConverter(objectMapper()));
     }
 

@@ -1,4 +1,4 @@
-package org.optionfactory.messages;
+package org.optionfactory.message;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/messages")
+@RequestMapping("/api/v1/message")
 public class MessageController {
     @Autowired
     private MessageFacade messageFacade;
@@ -17,7 +17,7 @@ public class MessageController {
     }
 
     @PostMapping("/create")
-    public Long postMessage(@RequestBody MessageRequest messageRequest) {
+    public Long createMessage(@RequestBody MessageRequest messageRequest) {
         return messageFacade.create(messageRequest);
     }
 

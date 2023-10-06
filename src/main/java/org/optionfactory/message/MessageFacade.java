@@ -1,4 +1,4 @@
-package org.optionfactory.messages;
+package org.optionfactory.message;
 
 import java.util.List;
 
