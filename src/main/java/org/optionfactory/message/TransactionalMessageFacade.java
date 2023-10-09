@@ -4,6 +4,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Clock;
 import java.util.List;
+import java.util.UUID;
 
 @Transactional
 public class TransactionalMessageFacade implements MessageFacade{
@@ -17,31 +18,46 @@ public class TransactionalMessageFacade implements MessageFacade{
 
     @Override
     public List<Message> list(Long threadId) {
-        return messageRepository.list(threadId);
+        return messageRepository.listByThread(threadId);
+    }
+
+
+    @Override
+    public void delete(UUID uuid) {
+//        final Optional<Message> message = messageRepository.searchById(id);
+//        if (message.isEmpty()) {
+//            throw new MessageNotFoundException(String.format("message with id <%s> not found", id));
+//        }
+//
+        // TODO: 10/9/23 check if current author has privileges
+        messageRepository.delete(uuid);
+
+//        final Long authorId;
+//        try{
+//            authorId = messageRepository.searchById(id).orElseThrow().getAuthorId();
+//        } catch (NoSuchElementException e) {
+//            throw new MessageNotFoundException();
+//        }
+//        messageRepository.delete(id);
     }
 
     @Override
-    public Long create(MessageRequest messageRequest) {
-        return messageRepository.create(Message.withoutId(
+    public Message search(UUID messageUUID) {
+        return messageRepository.searchById(messageUUID).orElseThrow(MessageNotFoundException::new);
+    }
+
+    @Override
+    public void upsert(MessageRequest messageRequest) {
+        messageRepository.upsert(new Message(
+                messageRequest.uuid(),
                 messageRequest.authorId(),
                 messageRequest.threadId(),
                 clock.instant(),
-                messageRequest.parentId(),
+                messageRequest.parentUUID(),
                 messageRequest.body(),
                 messageRequest.image(),
-                true
-        ));
+                true)
+        );
     }
-
-    @Override
-    public void update(Long id, MessageRequest messageRequest) {
-        messageRepository.update(Message.toUpdate(id, messageRequest.body()));
-    }
-
-    @Override
-    public void delete(Long id, MessageRequest messageRequest) {
-        messageRepository.delete(Message.toUpdate(id, messageRequest.body()));
-    }
-
 
 }

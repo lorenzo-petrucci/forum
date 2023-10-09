@@ -4,6 +4,8 @@ import org.springframework.jdbc.core.JdbcOperations;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class JdbcMessageRepository implements MessageRepository{
     private final JdbcOperations jdbc;
@@ -14,17 +16,17 @@ public class JdbcMessageRepository implements MessageRepository{
 
 
     @Override
-    public List<Message> list(Long threadId) {
+    public List<Message> listByThread(Long threadId) {
         return jdbc.query("""
                         SELECT * FROM message
                         WHERE thread_id = ?
                         """,
-                (rs, rowNum) -> Message.withId(
-                        rs.getLong("id"),
+                (rs, rowNum) -> new Message(
+                        UUID.fromString(rs.getString("uuid")),
                         rs.getLong("author_id"),
                         rs.getLong("thread_id"),
                         rs.getTimestamp("created_at").toInstant(),
-                        rs.getLong("parent_id"),
+                        Optional.ofNullable(rs.getString("parent_uuid")).map(UUID::fromString).orElse(null),
                         rs.getString("body"),
                         rs.getBytes("image"),
                         rs.getBoolean("is_active")
@@ -32,41 +34,52 @@ public class JdbcMessageRepository implements MessageRepository{
     }
 
     @Override
-    public Long create(Message message) {
-        return jdbc.queryForObject("""
-                INSERT INTO message (author_id, thread_id, created_at, parent_id, body, image, is_active)
-                VALUES(?, ?, ?, ?, ?, ?, ?)
-                RETURNING id
+    public int delete(UUID uuid) {
+        return jdbc.update("""
+                DELETE FROM message
+                WHERE uuid = ?
                 """,
-                Long.class,
-                message.getAuthorId(),
-                message.getThreadId(),
-                Timestamp.from(message.getCreatedAt()),
-                message.getParentId(),
-                message.getBody(),
-                message.getImage(),
-                message.isActive());
-    }
-
-    @Override
-    public void update(Message message) {
-        jdbc.update("""
-                UPDATE message
-                SET body = ?
-                WHERE id = ?
-                """,
-                message.getBody(),
-                message.getId()
+                uuid
         );
     }
 
     @Override
-    public void delete(Message message) {
-        jdbc.update("""
-                DELETE FROM message
-                WHERE id = ?
+    public Optional<Message> searchById(UUID uuid) {
+        return jdbc.query("""
+                SELECT * FROM message
+                WHERE uuid = ?
                 """,
-                message.getId()
+                (rs, rowNum) -> new Message(
+                        UUID.fromString(rs.getString("uuid")),
+                        rs.getLong("author_id"),
+                        rs.getLong("thread_id"),
+                        rs.getTimestamp("created_at").toInstant(),
+                        Optional.ofNullable(rs.getString("parent_uuid")).map(UUID::fromString).orElse(null),
+                        rs.getString("body"),
+                        rs.getBytes("image"),
+                        rs.getBoolean("is_active")
+                ), uuid).stream().findFirst();
+    }
+
+    @Override
+    public void upsert(Message message) {
+        jdbc.update("""
+                INSERT INTO message (uuid, author_id, thread_id, created_at, parent_uuid, body, image, is_active)
+                VALUES(?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT (uuid)
+                DO UPDATE
+                SET body = ?, image = ?
+                """,
+                message.getUuid(),
+                message.getAuthorId(),
+                message.getThreadId(),
+                Timestamp.from(message.getCreatedAt()),
+                message.getParentUUID(),
+                message.getBody(),
+                message.getImage(),
+                message.isActive(),
+                message.getBody(),
+                message.getImage()
         );
     }
 }

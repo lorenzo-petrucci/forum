@@ -1,42 +1,28 @@
 package org.optionfactory.message;
 
 import java.time.Instant;
+import java.util.Optional;
+import java.util.UUID;
 
 public class Message {
-    private final Long id;
+    private final UUID uuid;
     private final Long authorId;
     private final Long threadId;
     private final Instant createdAt;
-    private final Long parentId;
+    private final Optional<UUID> parentUUID;
     private final String body;
     private final byte[] image;
     private final Boolean isActive;
 
-    private Message(Long id, Long authorId, Long threadId, Instant createdAt, Long parentId, String body, byte[] image, Boolean isActive) {
-        this.id = id;
+    public Message(UUID uuid, Long authorId, Long threadId, Instant createdAt, UUID parentUUID, String body, byte[] image, Boolean isActive) {
+        this.uuid = uuid;
         this.authorId = authorId;
         this.threadId = threadId;
         this.createdAt = createdAt;
-        this.parentId = parentId;
+        this.parentUUID = Optional.ofNullable(parentUUID);
         this.body = body;
         this.image = image;
         this.isActive = isActive;
-    }
-
-    public static Message withoutId(Long authorId, Long threadId, Instant createdAt, Long parentId, String body, byte[] image, boolean isActive) {
-        return new Message(null, authorId, threadId, createdAt, parentId, body, image, isActive);
-    }
-
-    public static Message withId(Long id, Long authorId, Long threadId, Instant createdAt, Long parentId, String body, byte[] image, boolean isActive) {
-        return new Message(id, authorId, threadId, createdAt, parentId, body, image, isActive);
-    }
-
-    public static Message toUpdate(Long id, String body) {
-        return new Message(id, null, null, null, null, body, null, null);
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Long getAuthorId() {
@@ -51,8 +37,8 @@ public class Message {
         return createdAt;
     }
 
-    public Long getParentId() {
-        return parentId;
+    public Optional<UUID> getParentUUID() {
+        return parentUUID;
     }
 
     public String getBody() {
@@ -65,5 +51,9 @@ public class Message {
 
     public boolean isActive() {
         return isActive;
+    }
+
+    public UUID getUuid() {
+        return uuid;
     }
 }

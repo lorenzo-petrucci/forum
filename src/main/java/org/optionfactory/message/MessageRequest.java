@@ -1,4 +1,6 @@
 package org.optionfactory.message;
 
-public record MessageRequest(Long authorId, Long threadId, Long parentId, String body, byte[] image) {
+import java.util.UUID;
+
+public record MessageRequest(UUID uuid, Long authorId, Long threadId, UUID parentUUID, String body, byte[] image) {
 }
