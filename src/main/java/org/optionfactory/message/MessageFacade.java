@@ -6,6 +6,6 @@ import java.util.UUID;
 public interface MessageFacade {
     List<Message> list(Long threadId);
     void delete(UUID uuid);
-    Message search(UUID messageUUID);
+    Message search(UUID uuid);
     void upsert(MessageRequest messageRequest);
 }

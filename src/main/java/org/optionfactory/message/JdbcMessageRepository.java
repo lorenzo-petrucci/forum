@@ -74,7 +74,7 @@ public class JdbcMessageRepository implements MessageRepository{
                 message.getAuthorId(),
                 message.getThreadId(),
                 Timestamp.from(message.getCreatedAt()),
-                message.getParentUUID(),
+                message.getParentUUID().orElse(null),
                 message.getBody(),
                 message.getImage(),
                 message.isActive(),

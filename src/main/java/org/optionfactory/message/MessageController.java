@@ -34,7 +34,7 @@ public class MessageController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @PostMapping("/upsert")
+    @PostMapping
     public void upsertMessage(@RequestBody MessageRequest messageRequest) {
         messageFacade.upsert(messageRequest);
     }

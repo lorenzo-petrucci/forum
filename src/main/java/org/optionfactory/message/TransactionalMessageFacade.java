@@ -42,8 +42,8 @@ public class TransactionalMessageFacade implements MessageFacade{
     }
 
     @Override
-    public Message search(UUID messageUUID) {
-        return messageRepository.searchById(messageUUID).orElseThrow(MessageNotFoundException::new);
+    public Message search(UUID uuid) {
+        return messageRepository.searchById(uuid).orElseThrow(MessageNotFoundException::new);
     }
 
     @Override
