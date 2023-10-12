@@ -1,7 +1,6 @@
 package org.optionfactory.author;
 
 public class Author {
-    //(Long id, String name, String password, String salt, String privilege, Boolean is_blocked)
     private final Long id;
     private final String name;
     private final String password;

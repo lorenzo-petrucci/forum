@@ -1,14 +1,15 @@
 package org.optionfactory.author;
 
-import jakarta.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Optional;
 
 @Transactional
 public class TransactionalAuthorFacade implements AuthorFacade {
     @Autowired
-    private ServletContext servletContext;
+    private PasswordEncoder passwordEncoder;
     private final AuthorRepository authorRepository;
 
     public TransactionalAuthorFacade(AuthorRepository authorRepository) {
@@ -19,11 +20,11 @@ public class TransactionalAuthorFacade implements AuthorFacade {
     public Long create(AuthorRequest authorRequest) {
 
         String salt = "salt"; // FIXME: 10/6/23 implement correct authentication
-        String privilege = "user"; // FIXME: 10/6/23 use enum?
+        String privilege = Privileges.user();
 
         return authorRepository.createAuthor(Author.withoutId(
                 authorRequest.name(),
-                authorRequest.password(),
+                passwordEncoder.encode(authorRequest.password()),
                 salt,
                 privilege,
                 false

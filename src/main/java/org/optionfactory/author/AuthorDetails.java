@@ -1,6 +1,7 @@
 package org.optionfactory.author;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class AuthorDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<>();
+        return AuthorityUtils.createAuthorityList(author.getPrivilege());
     }
 
     @Override
