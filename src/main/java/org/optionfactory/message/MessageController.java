@@ -38,4 +38,12 @@ public class MessageController {
     public void upsertMessage(@RequestBody MessageRequest messageRequest) {
         messageFacade.upsert(messageRequest);
     }
+
+    @GetMapping("/private")
+    public void getPrivate() {
+    }
+
+    @GetMapping("/public")
+    public void getPublic() {
+    }
 }

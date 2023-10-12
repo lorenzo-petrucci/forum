@@ -1,6 +1,8 @@
 package org.optionfactory.author;
 
+import java.util.Optional;
+
 public interface AuthorRepository {
     Long createAuthor(Author author);
-    Author readAuthor(String name, String password);
+    Optional<Author> readAuthor(String name);
 }

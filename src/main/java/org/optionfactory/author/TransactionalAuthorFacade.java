@@ -1,9 +1,14 @@
 package org.optionfactory.author;
 
+import jakarta.servlet.ServletContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.Optional;
 
 @Transactional
 public class TransactionalAuthorFacade implements AuthorFacade {
+    @Autowired
+    private ServletContext servletContext;
     private final AuthorRepository authorRepository;
 
     public TransactionalAuthorFacade(AuthorRepository authorRepository) {
@@ -23,5 +28,10 @@ public class TransactionalAuthorFacade implements AuthorFacade {
                 privilege,
                 false
         ));
+    }
+
+    @Override
+    public Optional<Author> read(AuthorRequest authorRequest) {
+        return authorRepository.readAuthor(authorRequest.name());
     }
 }

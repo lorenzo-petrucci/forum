@@ -1,6 +1,7 @@
 package org.optionfactory.author;
 
 import org.springframework.jdbc.core.JdbcOperations;
+import java.util.Optional;
 
 public class JdbcAuthorRepository implements AuthorRepository{
     private final JdbcOperations jdbc;
@@ -26,7 +27,18 @@ public class JdbcAuthorRepository implements AuthorRepository{
     }
 
     @Override
-    public Author readAuthor(String name, String password) {
-        return null;
+    public Optional<Author> readAuthor(String name) {
+        return jdbc.query("""
+                SELECT * FROM author
+                WHERE name = ?
+                """,
+                (rs, i) -> Author.withId(
+                        rs.getLong("id"),
+                        rs.getString("name"),
+                        rs.getString("password"),
+                        rs.getString("salt"),
+                        rs.getString("privilege"),
+                        rs.getBoolean("is_blocked")
+                ), name).stream().findFirst();
     }
 }
