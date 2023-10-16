@@ -1,18 +1,9 @@
 package org.optionfactory.author;
 
-public class Privileges {
-    private Privileges(){
-    }
+public enum Privileges {
 
-    public static String admin() {
-        return "admin";
-    }
+    ADMIN,
+    USER,
+    MOD;
 
-    public static String user() {
-        return "user";
-    }
-
-    public static String mod() {
-        return "role";
-    }
 }

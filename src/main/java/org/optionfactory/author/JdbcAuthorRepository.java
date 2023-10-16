@@ -30,7 +30,7 @@ public class JdbcAuthorRepository implements AuthorRepository{
     public Optional<Author> readAuthor(String name) {
         return jdbc.query("""
                 SELECT * FROM author
-                WHERE name = ?
+                WHERE username = ?
                 """,
                 (rs, i) -> Author.withId(
                         rs.getLong("id"),
@@ -41,4 +41,22 @@ public class JdbcAuthorRepository implements AuthorRepository{
                         rs.getBoolean("is_blocked")
                 ), name).stream().findFirst();
     }
+
+    @Override
+    public Optional<Author> searchById(long id) {
+        return jdbc.query("""
+                SELECT * FROM author
+                WHERE id = ?
+                """,
+                (rs, i) -> Author.withId(
+                        rs.getLong("id"),
+                        rs.getString("name"),
+                        rs.getString("password"),
+                        rs.getString("salt"),
+                        rs.getString("privilege"),
+                        rs.getBoolean("is_blocked")
+                ), id).stream().findFirst();
+    }
+
+
 }

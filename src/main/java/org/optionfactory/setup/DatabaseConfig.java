@@ -5,6 +5,8 @@ import org.optionfactory.author.AuthorRepository;
 import org.optionfactory.author.JdbcAuthorRepository;
 import org.optionfactory.message.JdbcMessageRepository;
 import org.optionfactory.message.MessageRepository;
+import org.optionfactory.room.JdbcRoomRepository;
+import org.optionfactory.room.RoomRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -63,5 +65,10 @@ public class DatabaseConfig {
     @Bean
     public AuthorRepository authorRepository(JdbcOperations jdbcOperations) {
         return new JdbcAuthorRepository(jdbcOperations);
+    }
+
+    @Bean
+    public RoomRepository roomRepository(JdbcOperations jdbcOperations) {
+        return new JdbcRoomRepository(jdbcOperations);
     }
 }

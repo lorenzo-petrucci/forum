@@ -2,6 +2,7 @@ package org.optionfactory.setup;
 
 import org.optionfactory.author.AuthorFacade;
 import org.optionfactory.author.AuthorRepository;
+import org.optionfactory.author.Privileges;
 import org.optionfactory.author.TransactionalAuthorFacade;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

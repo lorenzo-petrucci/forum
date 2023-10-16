@@ -23,7 +23,7 @@ public class JdbcMessageRepository implements MessageRepository{
                         """,
                 (rs, rowNum) -> new Message(
                         UUID.fromString(rs.getString("uuid")),
-                        rs.getLong("author_id"),
+                        rs.getLong("authorId"),
                         rs.getLong("thread_id"),
                         rs.getTimestamp("created_at").toInstant(),
                         Optional.ofNullable(rs.getString("parent_uuid")).map(UUID::fromString).orElse(null),
@@ -51,7 +51,7 @@ public class JdbcMessageRepository implements MessageRepository{
                 """,
                 (rs, rowNum) -> new Message(
                         UUID.fromString(rs.getString("uuid")),
-                        rs.getLong("author_id"),
+                        rs.getLong("authorId"),
                         rs.getLong("thread_id"),
                         rs.getTimestamp("created_at").toInstant(),
                         Optional.ofNullable(rs.getString("parent_uuid")).map(UUID::fromString).orElse(null),
@@ -64,7 +64,7 @@ public class JdbcMessageRepository implements MessageRepository{
     @Override
     public void upsert(Message message) {
         jdbc.update("""
-                INSERT INTO message (uuid, author_id, thread_id, created_at, parent_uuid, body, image, is_active)
+                INSERT INTO message (uuid, authorId, thread_id, created_at, parent_uuid, body, image, is_active)
                 VALUES(?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT (uuid)
                 DO UPDATE

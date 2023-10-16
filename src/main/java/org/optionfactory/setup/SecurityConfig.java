@@ -1,9 +1,12 @@
 package org.optionfactory.setup;
 
+import jakarta.servlet.annotation.WebListener;
 import org.optionfactory.author.AuthorDetailsService;
 import org.optionfactory.author.Privileges;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,12 +26,13 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc, DaoAuthenticationProvider daoAuthenticationProvider) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .httpBasic(Customizer.withDefaults())
+                .formLogin(Customizer.withDefaults())
                 .authenticationProvider(daoAuthenticationProvider)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(mvc.pattern("/api/v1/message/private")).hasAuthority(Privileges.user())
-                        .requestMatchers(mvc.pattern("/api/v1/message/public")).authenticated()
-                        .requestMatchers(mvc.pattern("/api/v1/author/**")).permitAll()
+                        .requestMatchers(mvc.pattern("/public/**")).permitAll()
+                        .requestMatchers(mvc.pattern("/api/v1/message/private")).hasAuthority(Privileges.ADMIN.name())
+                        .requestMatchers(mvc.pattern("/api/v1/message/public")).hasAuthority(Privileges.USER.name())
+                        .anyRequest().permitAll()
                 );
         return http.build();
     }
@@ -59,6 +63,13 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+
+    @Bean
+    static RoleHierarchy roleHierarchy() {
+        final RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+        roleHierarchy.setHierarchy("admin > user");
+        return roleHierarchy;
     }
 }
 

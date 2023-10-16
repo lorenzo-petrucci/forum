@@ -19,20 +19,24 @@ public class TransactionalAuthorFacade implements AuthorFacade {
     @Override
     public Long create(AuthorRequest authorRequest) {
 
-        String salt = "salt"; // FIXME: 10/6/23 implement correct authentication
-        String privilege = Privileges.user();
+//        final String salt = UUID.randomUUID().toString();
 
         return authorRepository.createAuthor(Author.withoutId(
-                authorRequest.name(),
+                authorRequest.username(),
                 passwordEncoder.encode(authorRequest.password()),
-                salt,
-                privilege,
+                "salt",
+                Privileges.USER.name(),
                 false
         ));
     }
 
     @Override
     public Optional<Author> read(AuthorRequest authorRequest) {
-        return authorRepository.readAuthor(authorRequest.name());
+        return authorRepository.readAuthor(authorRequest.username());
+    }
+
+    @Override
+    public Author searchById(long id) {
+        return authorRepository.searchById(id).orElseThrow();
     }
 }
