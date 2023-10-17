@@ -26,7 +26,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc, DaoAuthenticationProvider daoAuthenticationProvider) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .formLogin(Customizer.withDefaults())
+                .formLogin(form -> form
+                        .loginPage("/public/login")
+                        .defaultSuccessUrl("/public/welcome")
+                        .permitAll())
                 .authenticationProvider(daoAuthenticationProvider)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(mvc.pattern("/public/**")).permitAll()
@@ -68,7 +71,7 @@ public class SecurityConfig {
     @Bean
     static RoleHierarchy roleHierarchy() {
         final RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        roleHierarchy.setHierarchy("admin > user");
+        roleHierarchy.setHierarchy("ADMIN > USER");
         return roleHierarchy;
     }
 }

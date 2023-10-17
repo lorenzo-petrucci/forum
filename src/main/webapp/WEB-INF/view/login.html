@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragments/headerLayout.html :: layout(~{::title})}">
+        <title>Login</title>
+    </head>
+    <body>
+        <div class="container m-3">
+            <form th:replace="~{fragments/formLayout :: layout(${'Log In'}, ${'/forum/public/login'})}"></form>
+            <div class="mt-3">
+                <div th:if="${param.error}">Invalid username and password.</div>
+                <div th:if="${param.logout}">You have been logged out.</div>
+            </div>
+        </div>
+    </body>
+</html>

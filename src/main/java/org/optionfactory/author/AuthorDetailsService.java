@@ -13,7 +13,7 @@ public class AuthorDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        final Optional<Author> optionalAuthor = authorRepository.readAuthor(name);
+        final Optional<Author> optionalAuthor = authorRepository.searchByName(name);
         if(optionalAuthor.isEmpty()) {
             throw new UsernameNotFoundException(name);
         }

@@ -32,7 +32,7 @@ public class TransactionalAuthorFacade implements AuthorFacade {
 
     @Override
     public Optional<Author> read(AuthorRequest authorRequest) {
-        return authorRepository.readAuthor(authorRequest.username());
+        return authorRepository.searchByName(authorRequest.username());
     }
 
     @Override

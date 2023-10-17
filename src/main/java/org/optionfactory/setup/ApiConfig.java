@@ -14,7 +14,6 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
@@ -46,13 +45,7 @@ public class ApiConfig implements WebMvcConfigurer {
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-//        converters.add(new FormHttpMessageConverter());
         converters.add(new MappingJackson2HttpMessageConverter(objectMapper()));
-    }
-
-    @Override
-    public void configureViewResolvers(ViewResolverRegistry registry) {
-        registry.jsp("/WEB-INF/view/", ".jsp");
     }
 
     @Bean
@@ -74,7 +67,6 @@ public class ApiConfig implements WebMvcConfigurer {
     public ThymeleafViewResolver viewResolver(SpringTemplateEngine templateEngine) {
         final ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine);
-        viewResolver.setOrder(1);
         return viewResolver;
     }
 }

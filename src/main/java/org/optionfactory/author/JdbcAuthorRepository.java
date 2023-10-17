@@ -27,10 +27,10 @@ public class JdbcAuthorRepository implements AuthorRepository{
     }
 
     @Override
-    public Optional<Author> readAuthor(String name) {
+    public Optional<Author> searchByName(String name) {
         return jdbc.query("""
                 SELECT * FROM author
-                WHERE username = ?
+                WHERE name = ?
                 """,
                 (rs, i) -> Author.withId(
                         rs.getLong("id"),
