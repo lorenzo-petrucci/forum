@@ -5,7 +5,16 @@
     </head>
     <body>
         <div class="container m-3">
-            <form th:replace="~{fragments/formLayout :: layout(${'Sign Up'}, ${'/forum/api/v1/author/create'})}"></form>
+            <h1>Sign Up</h1>
+            <form th:action="@{/api/v1/author/create}" method="POST">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username...">
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password...">
+                </div>
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+            </form>
         </div>
     </body>
 </html>

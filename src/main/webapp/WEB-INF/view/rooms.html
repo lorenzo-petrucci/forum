@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/headerLayout :: layout(~{::title})}">
-    <title>Public rooms</title>
-</head>
-<body>
-    <h1>Public rooms</h1>
-    <div th:each="room : ${roomList}">
-        <p>
-            <span th:text="${room.title}"></span>
-            <span th:text="${room.authorId}"></span>
-            <span th:text="${room.createdAt}"></span>
-        </p>
-    </div>
-</body>
+    <head th:replace="~{fragments/headerLayout :: layout(~{::title}, ~{::script})}">
+        <title>Public rooms</title>
+        <script th:src="@{/assets/rooms.js}" type="text/javascript"></script>
+    </head>
+    <body>
+        <div class="container m-3">
+            <h1>Public rooms</h1>
+            <div id="roomList"></div>
+        </div>
+    </body>
 </html>

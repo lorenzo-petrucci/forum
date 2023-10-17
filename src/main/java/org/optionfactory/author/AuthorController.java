@@ -1,8 +1,13 @@
 package org.optionfactory.author;
 
+import org.springframework.beans.factory.NamedBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/author")
@@ -18,7 +23,7 @@ public class AuthorController {
     }
 
     @GetMapping("/read")
-    public Author read(@RequestParam String name, @RequestParam String password) {
-        return authorFacade.read(new AuthorRequest(name, password)).orElseThrow();
+    public Author read(@RequestParam String name) {
+        return authorFacade.searchByName(name);
     }
 }

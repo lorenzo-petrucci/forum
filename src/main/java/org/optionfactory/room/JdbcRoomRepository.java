@@ -18,7 +18,6 @@ public class JdbcRoomRepository implements RoomRepository{
                         SELECT * FROM room
                         WHERE is_public = true
                         ORDER BY created_at DESC
-                        LIMIT 10
                         """,
                 (rs, rowNum) -> new Room(
                         rs.getLong("id"),

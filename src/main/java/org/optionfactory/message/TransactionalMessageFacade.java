@@ -21,24 +21,9 @@ public class TransactionalMessageFacade implements MessageFacade{
         return messageRepository.listByThread(threadId);
     }
 
-
     @Override
     public void delete(UUID uuid) {
-//        final Optional<Message> message = messageRepository.searchById(id);
-//        if (message.isEmpty()) {
-//            throw new MessageNotFoundException(String.format("message with id <%s> not found", id));
-//        }
-//
-        // TODO: 10/9/23 check if current author has privileges
         messageRepository.delete(uuid);
-
-//        final Long authorId;
-//        try{
-//            authorId = messageRepository.searchById(id).orElseThrow().getAuthorId();
-//        } catch (NoSuchElementException e) {
-//            throw new MessageNotFoundException();
-//        }
-//        messageRepository.delete(id);
     }
 
     @Override

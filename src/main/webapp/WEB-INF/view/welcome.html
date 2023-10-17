@@ -4,8 +4,6 @@
         <title>Welcome</title>
     </head>
     <body>
-        <div class="container m-3">
-            <h1>Welcome <span th:text="${author}"></span></h1>
-        </div>
+        <div th:replace="~{fragments/authorHeader :: author}"></div>
     </body>
 </html>

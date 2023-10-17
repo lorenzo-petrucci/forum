@@ -1,6 +1,9 @@
 package org.optionfactory.author;
 
 import org.springframework.jdbc.core.JdbcOperations;
+
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Optional;
 
 public class JdbcAuthorRepository implements AuthorRepository{
@@ -13,8 +16,8 @@ public class JdbcAuthorRepository implements AuthorRepository{
     @Override
     public Long createAuthor(Author author) {
         return jdbc.queryForObject("""
-                INSERT INTO author (name, password, salt, privilege, is_blocked)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT INTO author (name, password, salt, privilege, is_blocked, created_at)
+                VALUES (?, ?, ?, ?, ?, ?)
                 RETURNING id
                 """,
                 Long.class,
@@ -22,7 +25,8 @@ public class JdbcAuthorRepository implements AuthorRepository{
                 author.getPassword(),
                 author.getSalt(),
                 author.getPrivilege(),
-                author.isBlocked()
+                author.isBlocked(),
+                Timestamp.from(author.getCreatedAt())
         );
     }
 
@@ -38,7 +42,8 @@ public class JdbcAuthorRepository implements AuthorRepository{
                         rs.getString("password"),
                         rs.getString("salt"),
                         rs.getString("privilege"),
-                        rs.getBoolean("is_blocked")
+                        rs.getBoolean("is_blocked"),
+                        rs.getTimestamp("created_at").toInstant()
                 ), name).stream().findFirst();
     }
 
@@ -54,7 +59,8 @@ public class JdbcAuthorRepository implements AuthorRepository{
                         rs.getString("password"),
                         rs.getString("salt"),
                         rs.getString("privilege"),
-                        rs.getBoolean("is_blocked")
+                        rs.getBoolean("is_blocked"),
+                        rs.getTimestamp("created_at").toInstant()
                 ), id).stream().findFirst();
     }
 

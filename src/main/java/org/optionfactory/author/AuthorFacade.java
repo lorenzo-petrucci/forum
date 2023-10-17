@@ -1,9 +1,7 @@
 package org.optionfactory.author;
 
-import java.util.Optional;
-
 public interface AuthorFacade {
-    Long create(AuthorRequest authorRequest);
-    Optional<Author> read(AuthorRequest authorRequest);
+    long create(AuthorRequest authorRequest);
+    Author searchByName(String name);
     Author searchById(long id);
 }
