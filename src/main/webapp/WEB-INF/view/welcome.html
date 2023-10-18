@@ -4,6 +4,11 @@
         <title>Welcome</title>
     </head>
     <body>
+    <div class="container m-3">
         <div th:replace="~{fragments/authorHeader :: author}"></div>
+        <div th:switch="${author.getPrivilege()}" th:if="${author}">
+            <p th:case="'ADMIN'">Some admin tools</p>
+        </div>
+    </div>
     </body>
 </html>

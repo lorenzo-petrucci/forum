@@ -1,7 +1,8 @@
-<div class="container m-3" th:fragment="author">
-    <h1>Welcome <span th:text="${author.getName()}"></span></h1>
-    <div th:switch="${author.getPrivilege()}">
-        <p th:case="'ADMIN'">Some admin tools</p>
+<div th:fragment="author">
+    <h1>Welcome <span th:text="${author.getName()}" th:if="${author}"></span></h1>
+    <div th:unless="${author}" class="mb-3">
+        <a href="/forum/public/signup" class="btn btn-primary" role="button">Sign Up</a>
+        <a href="/forum/public/login" class="btn btn-secondary" role="button">Log In</a>
     </div>
-    <a href="/forum/public/login?logout"><button type="submit" class="btn btn-danger">Log out</button></a>
+    <a th:if="${author}" href="/forum/public/login?logout" class="btn btn-danger mb-3">Log out</a>
 </div>

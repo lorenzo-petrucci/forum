@@ -35,7 +35,7 @@ public class AuthorDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !author.isBlocked();
     }
 
     @Override
@@ -45,6 +45,6 @@ public class AuthorDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return !author.isBlocked();
     }
 }
