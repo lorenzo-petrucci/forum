@@ -1,6 +1,9 @@
 package org.optionfactory.author;
 
+import org.optionfactory.message.MessageNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -20,5 +23,12 @@ public class AuthorController {
     @GetMapping("/read")
     public Author searchAuthor(@RequestParam String name) {
         return authorFacade.searchByName(name);
+    }
+
+    @ExceptionHandler(AuthorNotFoundException.class)
+    public ResponseEntity<String> authorNotFound(AuthorNotFoundException e) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(e.message);
     }
 }

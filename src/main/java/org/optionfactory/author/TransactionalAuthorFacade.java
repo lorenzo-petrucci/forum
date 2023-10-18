@@ -29,11 +29,11 @@ public class TransactionalAuthorFacade implements AuthorFacade {
 
     @Override
     public Author searchByName(String name) {
-        return authorRepository.searchByName(name).orElseThrow(AuthorNotFoundException::new);
+        return authorRepository.searchByName(name).orElseThrow(() -> new AuthorNotFoundException(name));
     }
 
     @Override
     public Author searchById(long id) {
-        return authorRepository.searchById(id).orElseThrow(AuthorNotFoundException::new);
+        return authorRepository.searchById(id).orElseThrow(() -> new AuthorNotFoundException(id));
     }
 }
