@@ -16,7 +16,7 @@ public class JdbcMessageRepository implements MessageRepository{
 
 
     @Override
-    public List<Message> listByThread(Long threadId) {
+    public List<Message> listByThreadId(Long threadId) {
         return jdbc.query("""
                         SELECT * FROM message
                         WHERE thread_id = ?
@@ -34,7 +34,7 @@ public class JdbcMessageRepository implements MessageRepository{
     }
 
     @Override
-    public int delete(UUID uuid) {
+    public int deleteByUUID(UUID uuid) {
         return jdbc.update("""
                 DELETE FROM message
                 WHERE uuid = ?
@@ -44,7 +44,7 @@ public class JdbcMessageRepository implements MessageRepository{
     }
 
     @Override
-    public Optional<Message> searchById(UUID uuid) {
+    public Optional<Message> searchByUUID(UUID uuid) {
         return jdbc.query("""
                 SELECT * FROM message
                 WHERE uuid = ?

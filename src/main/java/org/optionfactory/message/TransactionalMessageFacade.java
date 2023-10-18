@@ -17,18 +17,18 @@ public class TransactionalMessageFacade implements MessageFacade{
     }
 
     @Override
-    public List<Message> list(Long threadId) {
-        return messageRepository.listByThread(threadId);
+    public List<Message> listByThreadId(Long threadId) {
+        return messageRepository.listByThreadId(threadId);
     }
 
     @Override
-    public void delete(UUID uuid) {
-        messageRepository.delete(uuid);
+    public void deleteByUUID(UUID uuid) {
+        messageRepository.deleteByUUID(uuid);
     }
 
     @Override
-    public Message search(UUID uuid) {
-        return messageRepository.searchById(uuid).orElseThrow(MessageNotFoundException::new);
+    public Message searchByUUID(UUID uuid) {
+        return messageRepository.searchByUUID(uuid).orElseThrow(MessageNotFoundException::new);
     }
 
     @Override

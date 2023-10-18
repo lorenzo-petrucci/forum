@@ -3,10 +3,6 @@ package org.optionfactory.message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.CurrentSecurityContext;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,22 +16,17 @@ public class MessageController {
 
     @GetMapping("/list/{threadId}/")
     public List<Message> listMessages(@PathVariable Long threadId) {
-        return messageFacade.list(threadId);
+        return messageFacade.listByThreadId(threadId);
     }
 
     @DeleteMapping("/{uuid}/")
     public void deleteMessage(@PathVariable UUID uuid) {
-        messageFacade.delete(uuid);
+        messageFacade.deleteByUUID(uuid);
     }
 
     @GetMapping("/{uuid}/")
     public Message searchMessage(@PathVariable UUID uuid) {
-        return messageFacade.search(uuid);
-    }
-
-    @ExceptionHandler(MessageNotFoundException.class)
-    public ResponseEntity<Void> messageNotFound() {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return messageFacade.searchByUUID(uuid);
     }
 
     @PostMapping
@@ -43,11 +34,8 @@ public class MessageController {
         messageFacade.upsert(messageRequest);
     }
 
-    @GetMapping("/private")
-    public void getPrivate() {
-    }
-
-    @GetMapping("/public")
-    public void getPublic() {
+    @ExceptionHandler(MessageNotFoundException.class)
+    public ResponseEntity<Void> messageNotFound() {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }

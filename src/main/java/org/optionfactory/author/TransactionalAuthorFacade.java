@@ -17,7 +17,7 @@ public class TransactionalAuthorFacade implements AuthorFacade {
 
     @Override
     public long create(AuthorRequest authorRequest) {
-        return authorRepository.createAuthor(Author.withoutId(
+        return authorRepository.create(Author.withoutId(
                 authorRequest.username(),
                 passwordEncoder.encode(authorRequest.password()),
                 "salt",

@@ -12,5 +12,4 @@ public class CoreConfig {
     public Clock clock() {
         return Clock.systemUTC();
     }
-
 }

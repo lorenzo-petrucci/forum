@@ -3,7 +3,6 @@ package org.optionfactory.author;
 import org.springframework.jdbc.core.JdbcOperations;
 
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.Optional;
 
 public class JdbcAuthorRepository implements AuthorRepository{
@@ -14,7 +13,7 @@ public class JdbcAuthorRepository implements AuthorRepository{
     }
 
     @Override
-    public Long createAuthor(Author author) {
+    public Long create(Author author) {
         return jdbc.queryForObject("""
                 INSERT INTO author (name, password, salt, privilege, is_blocked, created_at)
                 VALUES (?, ?, ?, ?, ?, ?)

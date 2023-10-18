@@ -15,6 +15,6 @@ public class RoomController {
 
     @GetMapping("/listPublic")
     public List<Room> listPublicRooms() {
-        return roomFacade.listPublicRooms();
+        return roomFacade.listPublic();
     }
 }

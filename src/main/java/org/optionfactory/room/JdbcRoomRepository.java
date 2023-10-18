@@ -13,7 +13,7 @@ public class JdbcRoomRepository implements RoomRepository{
     }
 
     @Override
-    public List<Room> listPublicRooms() {
+    public List<Room> listPublic() {
         return jdbc.query("""
                         SELECT * FROM room
                         WHERE is_public = true

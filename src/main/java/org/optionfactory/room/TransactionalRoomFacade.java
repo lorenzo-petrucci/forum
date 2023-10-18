@@ -12,7 +12,7 @@ public class TransactionalRoomFacade implements RoomFacade {
         this.roomRepository = roomRepository;
     }
 
-    public List<Room> listPublicRooms() {
-        return roomRepository.listPublicRooms();
+    public List<Room> listPublic() {
+        return roomRepository.listPublic();
     }
 }

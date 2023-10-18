@@ -4,14 +4,13 @@ $(document).ready(function() {
         'url': '/forum/api/v1/room/listPublic',
         success: function(res) {
             $.each(res, function(i) {
-                createCard(res[i]);
+                createRoomCard(res[i]);
             });
-            console.log(res);
         }
     });
 });
 
-function createCard(room) {
+function createRoomCard(room) {
     card = $('<div/>', {
         'class': 'card my-3'
     });

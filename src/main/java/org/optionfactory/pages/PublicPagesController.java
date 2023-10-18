@@ -19,8 +19,7 @@ public class PublicPagesController {
     private AuthorFacade authorFacade;
 
     @GetMapping("/rooms")
-    public String getRooms(Model model) {
-//        model.addAttribute("roomList", roomFacade.listPublicRooms());
+    public String getPublicRoomsPage() {
         return "rooms";
     }
 
