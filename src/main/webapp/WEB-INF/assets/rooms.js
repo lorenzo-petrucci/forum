@@ -15,13 +15,14 @@ $(document).ready(function() {
 });
 
 function createRoomCard(room) {
+    console.log(room);
     card = $('<div/>', {
         'class': 'card my-3'
     });
 
     $('<div/>', {
         'class': 'card-header',
-        'text': room.authorId
+        'text': room.authorName
     }).appendTo(card);
 
     cardBody = $('<div/>', {
@@ -37,7 +38,7 @@ function createRoomCard(room) {
 
     $('<div/>', {
         'class': 'card-footer text-body-secondary',
-        'text': room.createdAt
+        'text': new Date(room.createdAt).toLocaleString()
     }).appendTo(card);
 
     card.appendTo('#roomList');

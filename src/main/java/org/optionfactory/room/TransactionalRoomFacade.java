@@ -12,6 +12,7 @@ public class TransactionalRoomFacade implements RoomFacade {
         this.roomRepository = roomRepository;
     }
 
+    @Override
     public List<Room> listPublic(int recordPerPage, int pageNumber) {
         final int offset = pageNumber * recordPerPage;
         return roomRepository.listPublic(recordPerPage, offset);
