@@ -13,11 +13,12 @@ public class JdbcRoomRepository implements RoomRepository{
     }
 
     @Override
-    public List<Room> listPublic() {
+    public List<Room> listPublic(int limit, int offset) {
         return jdbc.query("""
                         SELECT * FROM room
                         WHERE is_public = true
                         ORDER BY created_at DESC
+                        LIMIT ? OFFSET ?
                         """,
                 (rs, rowNum) -> new Room(
                         rs.getLong("id"),
@@ -28,6 +29,6 @@ public class JdbcRoomRepository implements RoomRepository{
                         rs.getBoolean("is_public"),
                         rs.getBoolean("is_active"),
                         rs.getTimestamp("created_at").toInstant()
-                ));
+                ), limit, offset);
     }
 }

@@ -1,7 +1,11 @@
 $(document).ready(function() {
     $.ajax({
-        'type': 'GET',
-        'url': '/forum/api/v1/room/listPublic',
+        type: 'GET',
+        url: '/forum/api/v1/room/listPublic',
+        data: {
+            'recordPerPage': 10,
+            'pageNumber': 0
+        },
         success: function(res) {
             $.each(res, function(i) {
                 createRoomCard(res[i]);
