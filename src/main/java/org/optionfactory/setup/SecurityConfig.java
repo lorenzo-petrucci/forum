@@ -26,13 +26,12 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(form -> form
                         .loginPage("/public/login")
-                        .defaultSuccessUrl("/public/welcome")
+                        .defaultSuccessUrl("/private/welcome")
                         .permitAll())
                 .authenticationProvider(daoAuthenticationProvider)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(mvc.pattern("/public/**")).permitAll()
-                        .requestMatchers(mvc.pattern("/api/v1/message/private")).hasAuthority(Privileges.ADMIN.name())
-                        .requestMatchers(mvc.pattern("/api/v1/message/public")).hasAuthority(Privileges.USER.name())
+                        .requestMatchers(mvc.pattern("/private/**")).hasAuthority(Privileges.USER.name())
                         .anyRequest().permitAll()
                 );
         return http.build();
