@@ -4,7 +4,9 @@
         <span th:switch="${author.getPrivilege()}" th:if="${author}">
             <a th:case="'ADMIN'" href="/forum/admin/panel" class="btn btn-primary">Admin panel</a>
         </span>
-        <a th:if="${author}" href="/forum/public/login?logout" class="btn btn-danger">Log out</a>
+        <form th:action="@{/logout}" th:if="${author}" method="POST">
+            <button type="submit" class="btn btn-danger">Log out</button>
+        </form>
     </div>
     <div th:unless="${author}" class="mb-3">
         <a href="/forum/public/signup" class="btn btn-primary" role="button">Sign Up</a>
