@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/private")
-public class PrivatePagesController {
+public class PrivateController {
     @Autowired
     private AuthorFacade authorFacade;
 

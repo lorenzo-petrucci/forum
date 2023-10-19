@@ -1,10 +1,11 @@
 <div th:fragment="author">
     <h1>Welcome <span th:text="${author.getName()}" th:if="${author}"></span></h1>
-    <div class="my-3">
-        <span th:switch="${author.getPrivilege()}" th:if="${author}">
+    <div th:if="${author}" class="my-3">
+        <button id="new-room" class="btn btn-primary">New room</button>
+        <span th:switch="${author.getPrivilege()}">
             <a th:case="'ADMIN'" href="/forum/admin/panel" class="btn btn-primary">Admin panel</a>
         </span>
-        <form th:action="@{/logout}" th:if="${author}" method="POST">
+        <form th:action="@{/logout}" method="POST" style="display: inline">
             <button type="submit" class="btn btn-danger">Log out</button>
         </form>
     </div>
@@ -12,5 +13,4 @@
         <a href="/forum/public/signup" class="btn btn-primary" role="button">Sign Up</a>
         <a href="/forum/public/login" class="btn btn-secondary" role="button">Log In</a>
     </div>
-
 </div>

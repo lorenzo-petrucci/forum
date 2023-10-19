@@ -1,8 +1,9 @@
-let apiUrl = setApiUrl();
+let apiEndpoint = setApiEndpoint();
 $(document).ready(function() {
+    $("#" + apiEndpoint).addClass("active");
     $.ajax({
         type: 'GET',
-        url: apiUrl,
+        url: "/forum/api/v1/room/" + apiEndpoint,
         data: {
             'recordPerPage': 10,
             'pageNumber': 0
@@ -15,20 +16,19 @@ $(document).ready(function() {
     });
 });
 
-function setApiUrl() {
+function setApiEndpoint() {
     let privilege = window.location.pathname.split("/")[2];
     let roomType = window.location.pathname.split("/")[3];
-    let commonPath = "/forum/api/v1/room/";
     if (privilege == "public") {
-        return commonPath + "listPublic";
+        return "listPublic";
     } else {
         switch(roomType) {
             case "rooms":
-                return commonPath + "listPrivate";
+                return "listPrivate";
             case "subscribed":
-                return commonPath + "listSubscribed";
+                return "listSubscribed";
             case "owned":
-                return commonPath + "listOwned"
+                return "listOwned"
             default:
                 return null;
         }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/public")
-public class PublicPagesController {
+public class PublicController {
     @Autowired
     private AuthorFacade authorFacade;
 
