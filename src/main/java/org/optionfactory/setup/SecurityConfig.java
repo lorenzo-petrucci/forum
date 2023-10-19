@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
+import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
@@ -21,7 +23,11 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc, DaoAuthenticationProvider daoAuthenticationProvider) throws Exception {
+    public SecurityFilterChain filterChain(
+            HttpSecurity http,
+            MvcRequestMatcher.Builder mvc,
+            DaoAuthenticationProvider daoAuthenticationProvider
+    ) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(form -> form

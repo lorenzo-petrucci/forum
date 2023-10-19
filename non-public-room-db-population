@@ -1,0 +1,41 @@
+begin;
+insert into room (uuid, title, author_id, created_at, is_public, is_active)
+values (
+    gen_random_uuid(),
+    'private room',
+    12,
+    now(),
+    false,
+    true
+),(
+    gen_random_uuid(),
+    'subscribed room',
+    12,
+    now(),
+    false,
+    true
+),(
+    gen_random_uuid(),
+    'owned room',
+    40,
+    now(),
+    false,
+    true
+);
+
+begin;
+insert into subscription (author_id, room_id, created_at, is_active, privilege)
+values (
+    40,
+    4,
+    now(),
+    true,
+    'USER'
+);
+
+                        SELECT * FROM subscription
+                        JOIN author ON subscription.author_id = author.id
+                        JOIN room ON room.id = subscription.room_id
+                        WHERE subscription.author_id = 40
+                        ORDER BY room.created_at DESC
+                        LIMIT 10 OFFSET 0;

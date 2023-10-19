@@ -21,4 +21,24 @@ public class PrivatePagesController {
         model.addAttribute("author", currentAuthor);
         return "welcome";
     }
+
+    @GetMapping("/rooms")
+    public String getPrivateRoomsPage(Model model) {
+        final Author currentAuthor = authorFacade.searchByName(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("author", currentAuthor);
+        return "rooms";
+    }
+
+    @GetMapping("/subscribed")
+    public String getSubscribedRoomsPage(Model model) {
+        final Author currentAuthor = authorFacade.searchByName(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("author", currentAuthor);
+        return "rooms";
+    }
+    @GetMapping("/owned")
+    public String getOwnedRoomsPage(Model model) {
+        final Author currentAuthor = authorFacade.searchByName(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("author", currentAuthor);
+        return "rooms";
+    }
 }
