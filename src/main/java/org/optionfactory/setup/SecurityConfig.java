@@ -32,6 +32,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(mvc.pattern("/public/**")).permitAll()
                         .requestMatchers(mvc.pattern("/private/**")).hasAuthority(Privileges.USER.name())
+                        .requestMatchers(mvc.pattern("/admin/**")).hasAuthority(Privileges.ADMIN.name())
                         .anyRequest().permitAll()
                 );
         return http.build();

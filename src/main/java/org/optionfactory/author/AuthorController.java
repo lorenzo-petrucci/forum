@@ -14,7 +14,7 @@ public class AuthorController {
 
     @PostMapping("/create")
     public RedirectView createAuthor(AuthorRequest authorRequest) {
-        final long authorId = authorFacade.create(authorRequest);
+        authorFacade.create(authorRequest);
         final String redirectUrl = "/forum/public/login";
         return new RedirectView(redirectUrl);
     }
