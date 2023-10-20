@@ -17,6 +17,9 @@ public class TransactionalRoomFacade implements RoomFacade {
     public List<Room> list(int recordPerPage, int pageNumber, long authorId, String roomType) {
         final int offset = pageNumber * recordPerPage;
         return switch (roomType.toUpperCase()) {
+
+            // FIXME: 10/20/23 ENUM???
+
             case RoomType.PUBLIC -> roomRepository.listPublic(recordPerPage, offset);
             case RoomType.PRIVATE -> roomRepository.listPrivate(recordPerPage, offset);
             case RoomType.SUBSCRIBED -> roomRepository.listSubscribed(recordPerPage, offset, authorId);

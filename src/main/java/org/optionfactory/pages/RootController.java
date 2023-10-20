@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/")
 public class RootController {
-
-    @GetMapping
-    public String getRootPage() {
-        return "redirect:public/welcome";
-    }
+//
+//    @GetMapping
+//    public String getRootPage() {
+//        return "redirect:public/welcome";
+//    }
 }

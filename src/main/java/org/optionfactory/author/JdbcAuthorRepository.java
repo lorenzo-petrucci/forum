@@ -62,6 +62,4 @@ public class JdbcAuthorRepository implements AuthorRepository{
                         rs.getTimestamp("created_at").toInstant()
                 ), id).stream().findFirst();
     }
-
-
 }
