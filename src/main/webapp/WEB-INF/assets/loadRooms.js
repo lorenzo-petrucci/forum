@@ -1,48 +1,26 @@
-function loadRooms(apiEndpoint) {
-    let roomContainer = $('<div/>', {
-            'class': 'room-list'
-        });
+function loadRooms(roomType) {
     $.ajax({
         type: 'GET',
-        url: apiEndpoint,
+        url: '/forum/api/v1/room/list',
         data: {
             'recordPerPage': 10,
-            'pageNumber': 0
+            'pageNumber': 0,
+            'roomType': roomType
         },
         success: function(res) {
             $.each(res, function(i) {
-                createRoomCard(res[i]);
+                populateRoomCard(res[i]);
             });
         }
     });
-    $('.container').last().append(roomContainer);
 };
 
-function createRoomCard(room) {
-    let card = $('<div/>', {
-        'class': 'card my-3'
-    });
+function populateRoomCard(room) {
+    let roomCard = $('[data-ref=room]').clone();
+    roomCard.children('[data-ref=author]').text(room.authorName);
+    roomCard.children('[data-ref=title]').children().first().text(room.title);
+    roomCard.children('[data-ref=date]').text(new Date(room.createdAt));
+    roomCard.attr('data-ref', 'populated').removeClass('d-none');
+    roomCard.appendTo('[data-ref=room-list]');
+};
 
-    $('<div/>', {
-        'class': 'card-header',
-        'text': room.authorName
-    }).appendTo(card);
-
-    let cardBody = $('<div/>', {
-        'class': 'card-body'
-    });
-
-    $('<h5/>', {
-        'class': 'card-title',
-        'text': room.title
-    }).appendTo(cardBody);
-
-    cardBody.appendTo(card);
-
-    $('<div/>', {
-        'class': 'card-footer text-body-secondary',
-        'text': new Date(room.createdAt).toLocaleString()
-    }).appendTo(card);
-
-    card.appendTo('.room-list');
-}

@@ -1,3 +1,1 @@
-$(document).ready(function() {
-    loadRooms('/forum/api/v1/room/listPublic');
-});
+$(document).ready(loadRooms('public'));

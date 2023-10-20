@@ -2,6 +2,7 @@ package org.optionfactory.room;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
@@ -13,26 +14,14 @@ public class TransactionalRoomFacade implements RoomFacade {
     }
 
     @Override
-    public List<Room> listPublic(int recordPerPage, int pageNumber) {
+    public List<Room> list(int recordPerPage, int pageNumber, long authorId, String roomType) {
         final int offset = pageNumber * recordPerPage;
-        return roomRepository.listPublic(recordPerPage, offset);
-    }
-
-    @Override
-    public List<Room> listPrivate(int recordPerPage, int pageNumber) {
-        final int offset = pageNumber * recordPerPage;
-        return roomRepository.listPrivate(recordPerPage, offset);
-    }
-
-    @Override
-    public List<Room> listSubscribed(int recordPerPage, int pageNumber, long authorId) {
-        final int offset = pageNumber * recordPerPage;
-        return roomRepository.listSubscribed(recordPerPage, offset, authorId);
-    }
-
-    @Override
-    public List<Room> listOwned(int recordPerPage, int pageNumber, long authorId) {
-        final int offset = pageNumber * recordPerPage;
-        return roomRepository.listOwned(recordPerPage, offset, authorId);
+        return switch (roomType.toUpperCase()) {
+            case RoomType.PUBLIC -> roomRepository.listPublic(recordPerPage, offset);
+            case RoomType.PRIVATE -> roomRepository.listPrivate(recordPerPage, offset);
+            case RoomType.SUBSCRIBED -> roomRepository.listSubscribed(recordPerPage, offset, authorId);
+            case RoomType.OWNED -> roomRepository.listOwned(recordPerPage, pageNumber, authorId);
+            default -> new ArrayList<>();
+        };
     }
 }

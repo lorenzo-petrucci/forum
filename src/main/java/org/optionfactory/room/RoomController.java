@@ -1,6 +1,5 @@
 package org.optionfactory.room;
 
-import org.optionfactory.author.Author;
 import org.optionfactory.author.AuthorFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,25 +18,9 @@ public class RoomController {
     @Autowired
     private AuthorFacade authorFacade;
 
-    @GetMapping("/listPublic")
-    public List<Room> listPublicRooms(@RequestParam int recordPerPage, @RequestParam int pageNumber) {
-        return roomFacade.listPublic(recordPerPage, pageNumber);
-    }
-
-    @GetMapping("/listPrivate")
-    public List<Room> listPrivateRooms(@RequestParam int recordPerPage, @RequestParam int pageNumber) {
-        return roomFacade.listPrivate(recordPerPage, pageNumber);
-    }
-
-    @GetMapping("/listSubscribed")
-    public List<Room> listSubscribedRooms(@RequestParam int recordPerPage, @RequestParam int pageNumber) {
+    @GetMapping("/list")
+    public List<Room> listOwnedRooms(@RequestParam int recordPerPage, @RequestParam int pageNumber, @RequestParam String roomType) {
         final long authorId = authorFacade.searchByName(SecurityContextHolder.getContext().getAuthentication().getName()).getId();
-        return roomFacade.listSubscribed(recordPerPage, pageNumber, authorId);
-    }
-
-    @GetMapping("/listOwned")
-    public List<Room> listOwnedRooms(@RequestParam int recordPerPage, @RequestParam int pageNumber) {
-        final long authorId = authorFacade.searchByName(SecurityContextHolder.getContext().getAuthentication().getName()).getId();
-        return roomFacade.listOwned(recordPerPage, pageNumber, authorId);
+        return roomFacade.list(recordPerPage, pageNumber, authorId, roomType);
     }
 }
