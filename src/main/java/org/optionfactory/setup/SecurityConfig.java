@@ -30,7 +30,7 @@ public class SecurityConfig {
             DaoAuthenticationProvider daoAuthenticationProvider
     ) throws Exception {
         http
-                .csrf(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(form -> form
                         .loginPage("/public/login")
                         .defaultSuccessUrl("/private/rooms")
@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .authenticationProvider(daoAuthenticationProvider)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(mvc.pattern("/public/**")).permitAll()
+                        .requestMatchers(mvc.pattern("/api/v1/author/create")).permitAll()
                         .requestMatchers(mvc.pattern("/private/**")).hasAuthority(Privileges.USER.name())
                         .requestMatchers(mvc.pattern("/admin/**")).hasAuthority(Privileges.ADMIN.name())
                         .anyRequest().permitAll()

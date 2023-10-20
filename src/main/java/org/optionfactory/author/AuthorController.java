@@ -13,10 +13,8 @@ public class AuthorController {
     private AuthorFacade authorFacade;
 
     @PostMapping("/create")
-    public RedirectView createAuthor(AuthorRequest authorRequest) {
+    public void createAuthor(AuthorRequest authorRequest) {
         authorFacade.create(authorRequest);
-        final String redirectUrl = "/forum/public/login";
-        return new RedirectView(redirectUrl);
     }
 
     @GetMapping("/read")
