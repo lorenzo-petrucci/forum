@@ -15,10 +15,10 @@ public class PrivateController {
     @Autowired
     private AuthorFacade authorFacade;
 
-    @GetMapping("/welcome")
+    @GetMapping("/rooms")
     public String getWelcomePage(Model model) {
         final Author currentAuthor = authorFacade.searchByName(SecurityContextHolder.getContext().getAuthentication().getName());
         model.addAttribute("author", currentAuthor);
-        return "welcome";
+        return "rooms";
     }
 }

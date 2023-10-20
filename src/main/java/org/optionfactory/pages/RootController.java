@@ -10,6 +10,6 @@ public class RootController {
 
     @GetMapping
     public String getRootPage() {
-        return "redirect:public/rooms";
+        return "redirect:public/welcome";
     }
 }

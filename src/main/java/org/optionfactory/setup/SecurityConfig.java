@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .csrf(Customizer.withDefaults())
                 .formLogin(form -> form
                         .loginPage("/public/login")
-                        .defaultSuccessUrl("/private/welcome")
+                        .defaultSuccessUrl("/private/rooms")
                         .permitAll())
                 .authenticationProvider(daoAuthenticationProvider)
                 .authorizeHttpRequests(authorize -> authorize

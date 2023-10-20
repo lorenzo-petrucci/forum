@@ -16,17 +16,9 @@ public class PublicController {
     @Autowired
     private AuthorFacade authorFacade;
 
-    @GetMapping("/rooms")
-    public String getPublicRoomsPage(Model model) {
-        final String currentAuthorName = SecurityContextHolder.getContext().getAuthentication().getName();
-        Author currentAuthor;
-        try {
-            currentAuthor = authorFacade.searchByName(currentAuthorName);
-        } catch (AuthorNotFoundException e) {
-            currentAuthor = null;
-        }
-        model.addAttribute("author", currentAuthor);
-        return "rooms";
+    @GetMapping("/welcome")
+    public String getPublicRoomsPage() {
+        return "welcome";
     }
 
     @GetMapping("/signup")

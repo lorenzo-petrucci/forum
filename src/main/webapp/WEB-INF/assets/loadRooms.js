@@ -1,17 +1,7 @@
-$(document).on('click', '.nav-link', function() {
-    if ($('.room-list') != null) {
-        $('.room-list').remove();
-        $('.nav-link').removeClass('active');
-    }
-    $(this).addClass('active');
-    loadRooms($(this).attr('id'));
-});
-
-function loadRooms(roomCategory) {
+function loadRooms(apiEndpoint) {
     let roomContainer = $('<div/>', {
             'class': 'room-list'
         });
-    let apiEndpoint = mapToEndpoint(roomCategory);
     $.ajax({
         type: 'GET',
         url: apiEndpoint,
@@ -27,11 +17,6 @@ function loadRooms(roomCategory) {
     });
     $('.container').last().append(roomContainer);
 };
-
-function mapToEndpoint(elementId) {
-    let pascalCaseId = elementId.charAt(0).toUpperCase() + elementId.slice(1);
-    return '/forum/api/v1/room/list' + pascalCaseId;
-}
 
 function createRoomCard(room) {
     let card = $('<div/>', {
