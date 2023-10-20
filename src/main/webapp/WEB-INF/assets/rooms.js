@@ -1,9 +1,20 @@
-let apiEndpoint = setApiEndpoint();
-$(document).ready(function() {
-    $("#" + apiEndpoint).addClass("active");
+$(document).on('click', '.nav-link', function() {
+    if ($('.room-list') != null) {
+        $('.room-list').remove();
+        $('.nav-link').removeClass('active');
+    }
+    $(this).addClass('active');
+    loadRooms($(this).attr('id'));
+});
+
+function loadRooms(roomCategory) {
+    let roomContainer = $('<div/>', {
+            'class': 'room-list'
+        });
+    let apiEndpoint = mapToEndpoint(roomCategory);
     $.ajax({
         type: 'GET',
-        url: "/forum/api/v1/room/" + apiEndpoint,
+        url: apiEndpoint,
         data: {
             'recordPerPage': 10,
             'pageNumber': 0
@@ -14,25 +25,12 @@ $(document).ready(function() {
             });
         }
     });
-});
+    $('.container').last().append(roomContainer);
+};
 
-function setApiEndpoint() {
-    let privilege = window.location.pathname.split("/")[2];
-    let roomType = window.location.pathname.split("/")[3];
-    if (privilege == "public") {
-        return "listPublic";
-    } else {
-        switch(roomType) {
-            case "rooms":
-                return "listPrivate";
-            case "subscribed":
-                return "listSubscribed";
-            case "owned":
-                return "listOwned"
-            default:
-                return null;
-        }
-    }
+function mapToEndpoint(elementId) {
+    let pascalCaseId = elementId.charAt(0).toUpperCase() + elementId.slice(1);
+    return '/forum/api/v1/room/list' + pascalCaseId;
 }
 
 function createRoomCard(room) {
@@ -61,5 +59,5 @@ function createRoomCard(room) {
         'text': new Date(room.createdAt).toLocaleString()
     }).appendTo(card);
 
-    card.appendTo('#roomList');
+    card.appendTo('.room-list');
 }
