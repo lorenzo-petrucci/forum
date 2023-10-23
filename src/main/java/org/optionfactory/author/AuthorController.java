@@ -13,8 +13,10 @@ public class AuthorController {
     private AuthorFacade authorFacade;
 
     @PostMapping("/create")
-    public void createAuthor(AuthorRequest authorRequest) {
-        authorFacade.create(authorRequest);
+    public void createAuthor(@RequestHeader("X-Requested-With") String xhrHeader, AuthorRequest authorRequest) {
+        if (xhrHeader.equals("XMLHttpRequest")) {
+            authorFacade.create(authorRequest);
+        }
     }
 
     @GetMapping("/read")
