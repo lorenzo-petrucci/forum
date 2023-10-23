@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{fragments/headerLayout :: layout(~{::title},~{})}">
-        <title>Signup</title>
-    </head>
-    <body>
-        <div class="container m-3">
-            <h1>Sign Up</h1>
-            <form th:action="@{/public/api/v1/author/create}" method="POST">
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Username...">
-                </div>
-                <div class="mb-3">
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Password...">
-                </div>
-                <button type="submit" class="btn btn-primary">Sign Up</button>
-            </form>
+<head th:replace="~{fragments/headerLayout :: layout(~{::title}, ~{::script})}">
+    <title>Signup</title>
+    <script th:src="@{/assets/public/signup.js}" type="text/javascript"></script>
+</head>
+<body>
+    <div class="container m-3">
+        <h1>Sign Up</h1>
+        <div class="mb-3">
+            <input type="text" class="form-control" id="username" name="username" placeholder="Username...">
         </div>
-    </body>
+        <div class="mb-3">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password...">
+        </div>
+        <button class="btn btn-primary" data-ref="signup">Sign Up</button>
+        <div class="mt-3">
+            <div data-ref="error-message" class="d-none"></div>
+        </div>
+    </div>
+</body>
 </html>

@@ -22,12 +22,12 @@ function sendSignUpRequest() {
             window.location.href = '/forum/public/login';
         },
         error: function(request) {
-            showErrorBanner(request.responseText);
+            showErrorBanner(request);
         }
     });
 };
 
-function showErrorBanner(errorMessage) {
-    $('[data-ref=error-message]').text(errorMessage);
+function showErrorBanner(request) {
+    $('[data-ref=error-message]').text(request.responseJSON);
     $('[data-ref=error-message]').removeClass('d-none');
 };
