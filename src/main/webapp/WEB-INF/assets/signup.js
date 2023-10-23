@@ -1,6 +1,14 @@
 $(document).on('click', '[data-ref=signup]', function() {
-    console.log($('#username').val());
-    console.log($('#password').val());
+    sendSignUpRequest();
+});
+
+$(document).on('keypress', function(e) {
+    if(e.which == 13) {
+        sendSignUpRequest();
+    }
+});
+
+function sendSignUpRequest() {
     $.ajax({
         type: 'POST',
         url: '/forum/api/v1/author/create',
@@ -13,4 +21,4 @@ $(document).on('click', '[data-ref=signup]', function() {
             window.location.href = '/forum/public/login';
         }
     });
-});
+};

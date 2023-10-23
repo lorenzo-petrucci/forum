@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/public")
 public class PublicController {
-    @Autowired
-    private AuthorFacade authorFacade;
 
     @GetMapping("/welcome")
     public String getPublicRoomsPage() {
