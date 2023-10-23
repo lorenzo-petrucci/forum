@@ -14,17 +14,19 @@ public class TransactionalRoomFacade implements RoomFacade {
     }
 
     @Override
-    public List<Room> list(int recordPerPage, int pageNumber, long authorId, String roomType) {
+    public List<Room> list(int recordPerPage, int pageNumber, long authorId, RoomType roomType) {
         final int offset = pageNumber * recordPerPage;
-        return switch (roomType.toUpperCase()) {
-
-            // FIXME: 10/20/23 ENUM???
-
-            case RoomType.PUBLIC -> roomRepository.listPublic(recordPerPage, offset);
-            case RoomType.PRIVATE -> roomRepository.listPrivate(recordPerPage, offset);
-            case RoomType.SUBSCRIBED -> roomRepository.listSubscribed(recordPerPage, offset, authorId);
-            case RoomType.OWNED -> roomRepository.listOwned(recordPerPage, pageNumber, authorId);
-            default -> new ArrayList<>();
+        return switch (roomType) {
+            case PUBLIC -> roomRepository.listPublic(recordPerPage, offset);
+            case PRIVATE -> roomRepository.listPrivate(recordPerPage, offset);
+            case SUBSCRIBED -> roomRepository.listSubscribed(recordPerPage, offset, authorId);
+            case OWNED -> roomRepository.listOwned(recordPerPage, pageNumber, authorId);
         };
+    }
+
+    @Override
+    public List<Room> listPublic(int recordPerPage, int pageNumber) {
+        final int offset = pageNumber * recordPerPage;
+        return roomRepository.listPublic(recordPerPage, offset);
     }
 }

@@ -1,0 +1,1 @@
+$(document).ready(loadRooms('/forum/public/api/v1/room/list'));

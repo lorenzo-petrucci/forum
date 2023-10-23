@@ -1,7 +1,7 @@
-function loadRooms(roomType) {
+function loadRooms(apiUrl, roomType='') {
     $.ajax({
         type: 'GET',
-        url: '/forum/api/v1/room/list',
+        url: apiUrl,
         data: {
             'recordPerPage': 10,
             'pageNumber': 0,

@@ -1,8 +1,13 @@
 package org.optionfactory.room;
 
-public final class RoomType {
-    final static String PUBLIC = "PUBLIC";
-    final static String PRIVATE = "PRIVATE";
-    final static String SUBSCRIBED = "SUBSCRIBED";
-    final static String OWNED = "OWNED";
+public enum RoomType {
+    PUBLIC("public"),
+    PRIVATE("private"),
+    SUBSCRIBED("subscribed"),
+    OWNED("owned");
+    final String verbose;
+
+    RoomType(String verbose) {
+        this.verbose = verbose;
+    }
 }

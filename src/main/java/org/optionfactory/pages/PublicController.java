@@ -21,7 +21,7 @@ public class PublicController {
 
     @GetMapping("/signup")
     public String getSignupPage() {
-        return "signup";
+        return "jsignup";
     }
 
     @GetMapping("/login")

@@ -7,8 +7,11 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.optionfactory.WebAppInitializer;
+import org.optionfactory.room.RoomType;
 import org.springframework.context.annotation.*;
 import org.springframework.context.annotation.ComponentScan.Filter;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -55,6 +58,18 @@ public class ApiConfig implements WebMvcConfigurer {
         registry
                 .addResourceHandler("/assets/**")
                 .addResourceLocations("/WEB-INF/assets/");
+    }
+
+    public static class StringToRoomTypeConverter implements Converter<String, RoomType> {
+        @Override
+        public RoomType convert(String source) {
+            return RoomType.valueOf(source.toUpperCase());
+        }
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(new StringToRoomTypeConverter());
     }
 
     @Override
