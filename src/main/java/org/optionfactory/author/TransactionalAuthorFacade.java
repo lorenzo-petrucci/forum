@@ -18,6 +18,13 @@ public class TransactionalAuthorFacade implements AuthorFacade {
 
     @Override
     public long create(AuthorRequest authorRequest) {
+        if (authorRequest.username().isBlank() || authorRequest.password().isBlank()) {
+            throw new AuthorIsEmptyException();
+        }
+        final Optional<Author> author = authorRepository.searchByName(authorRequest.username());
+        if (author.isPresent()) {
+            throw new AuthorAlreadyExistsException(authorRequest.username());
+        }
         return authorRepository.create(Author.withoutId(
                 authorRequest.username(),
                 passwordEncoder.encode(authorRequest.password()),

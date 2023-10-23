@@ -4,6 +4,7 @@ $(document).on('click', '[data-ref=signup]', function() {
 
 $(document).on('keypress', function(e) {
     if(e.which == 13) {
+        e.preventDefault();
         sendSignUpRequest();
     }
 });
@@ -19,6 +20,14 @@ function sendSignUpRequest() {
         },
         success: function() {
             window.location.href = '/forum/public/login';
+        },
+        error: function(request) {
+            showErrorBanner(request.responseText);
         }
     });
+};
+
+function showErrorBanner(errorMessage) {
+    $('[data-ref=error-message]').text(errorMessage.replaceAll('"', ''));
+    $('[data-ref=error-message]').removeClass('d-none');
 };

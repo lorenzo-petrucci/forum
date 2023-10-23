@@ -28,4 +28,18 @@ public class AuthorController {
                 .status(HttpStatus.NOT_FOUND)
                 .body(e.message);
     }
+
+    @ExceptionHandler(AuthorAlreadyExistsException.class)
+    public ResponseEntity<String> authorAlreadyExists(AuthorAlreadyExistsException e) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(e.message);
+    }
+
+    @ExceptionHandler(AuthorIsEmptyException.class)
+    public ResponseEntity<String> authorIsEmpty(AuthorIsEmptyException e) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(e.message);
+    }
 }
