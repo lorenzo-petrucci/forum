@@ -4,6 +4,5 @@ $(document).ready(loadRooms(API_URL, 'public'));
 $(document).on('click', '.nav-link', function() {
     $('.nav-link').removeClass('active');
     $(this).addClass('active');
-    $('[data-ref=populated]').remove();
     loadRooms(API_URL, $(this).data('ref'));
 });

@@ -4,10 +4,7 @@ import org.optionfactory.author.AuthorDetails;
 import org.optionfactory.author.AuthorFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +24,10 @@ public class RoomPrivateController {
             @AuthenticationPrincipal AuthorDetails author) {
         final long authorId = author == null ? 0 : authorFacade.searchByName(author.getUsername()).getId();
         return roomFacade.list(recordPerPage, pageNumber, authorId, roomType);
+    }
+
+    @PostMapping("/create")
+    public void createRoom(RoomRequest roomRequest) {
+        roomFacade.upsert(roomRequest);
     }
 }

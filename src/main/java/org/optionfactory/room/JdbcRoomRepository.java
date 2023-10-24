@@ -102,4 +102,24 @@ public class JdbcRoomRepository implements RoomRepository{
                         Optional.ofNullable(rs.getTimestamp("exited_at")).map(Timestamp::toInstant)
                 ), authorId, limit, offset);
     }
+
+    @Override
+    public void upsert(RoomRequest roomRequest) {
+        jdbc.update("""
+                INSERT INTO room (uuid, title, author_id, created_at, is_public, is_active)
+                VALUES(?, ?, ?, ?, ?, ?)
+                ON CONFLICT (uuid)
+                DO UPDATE
+                SET title = ?, is_public = ?
+                """,
+                roomRequest.uuid(),
+                roomRequest.title(),
+                roomRequest.authorId(),
+                Timestamp.from(roomRequest.createdAt()),
+                roomRequest.isPublic(),
+                roomRequest.isActive(),
+                roomRequest.title(),
+                roomRequest.isPublic()
+        );
+    }
 }

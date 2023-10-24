@@ -1,7 +1,6 @@
 <div th:fragment="author">
     <h1>Logged as <span th:text="${author.getName()}"></span></h1>
     <div class="my-3">
-        <button id="new-room" class="btn btn-primary">New room</button>
         <span th:switch="${author.getPrivilege()}">
             <a th:case="'ADMIN'" href="/forum/admin/panel" class="btn btn-primary">Admin panel</a>
         </span>

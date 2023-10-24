@@ -1,4 +1,5 @@
 function loadRooms(apiUrl, roomType='') {
+    $('[data-ref=populated]').remove();
     $.ajax({
         type: 'GET',
         url: apiUrl,

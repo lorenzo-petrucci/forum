@@ -29,4 +29,9 @@ public class TransactionalRoomFacade implements RoomFacade {
         final int offset = pageNumber * recordPerPage;
         return roomRepository.listPublic(recordPerPage, offset);
     }
+
+    @Override
+    public void upsert(RoomRequest roomRequest) {
+        roomRepository.upsert(roomRequest);
+    }
 }

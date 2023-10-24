@@ -2,8 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head th:replace="~{fragments/headerLayout :: layout(~{::title}, ~{::script})}">
         <title>Welcome</title>
+        <script th:inline="javascript">
+            const AUTHOR_ID = /*[[${author.getId}]]*/;
+            const AUTHOR_NAME = /*[[${author.getName}]]*/;
+        </script>
         <script th:src="@{/assets/public/loadRooms.js}" type="text/javascript"></script>
         <script th:src="@{/assets/authRooms.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/createRoom.js}" type="text/javascript"></script>
     </head>
     <body>
         <div class="container m-3">
@@ -11,6 +16,7 @@
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
                     <a class="navbar-brand">Rooms</a>
+                    <button data-ref="new-room" class="btn btn-primary me-3">New room</button>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -28,10 +34,23 @@
                             <li class="nav-item">
                                 <a data-ref="owned" class="nav-link" href="#">Owned</a>
                             </li>
+
                         </ul>
                     </div>
                 </div>
             </nav>
+            <div data-ref="create-room-form" class="row mt-3 d-none">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Title" data-ref="room-title">
+                </div>
+                <div class="col mt-2">
+                    <input type="checkbox" data-ref="is-private" id="is-private" class="form-check-input">
+                    <label for="is-private" class="form-check-label">Private</label>
+                </div>
+                <div class="col">
+                    <button data-ref="create-room" class="btn btn-primary me-3">Create</button>
+                </div>
+            </div>
             <div data-ref="room-list">
                 <div class="card my-3 d-none" data-ref="room">
                     <div class="card-header" data-ref="author"></div>
