@@ -4,6 +4,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -43,5 +44,15 @@ public class TransactionalAuthorFacade implements AuthorFacade {
     @Override
     public Author searchById(long id) {
         return authorRepository.searchById(id).orElseThrow(() -> new AuthorNotFoundException(id));
+    }
+
+    @Override
+    public List<Author> listByName(String name) {
+        return authorRepository.listByName(name);
+    }
+
+    @Override
+    public void updateBlockStatusById(long id, boolean block) {
+        authorRepository.updateBlockStatusById(id, block);
     }
 }

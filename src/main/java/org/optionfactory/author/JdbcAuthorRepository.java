@@ -3,6 +3,7 @@ package org.optionfactory.author;
 import org.springframework.jdbc.core.JdbcOperations;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
 
 public class JdbcAuthorRepository implements AuthorRepository{
@@ -61,5 +62,34 @@ public class JdbcAuthorRepository implements AuthorRepository{
                         rs.getBoolean("is_blocked"),
                         rs.getTimestamp("created_at").toInstant()
                 ), id).stream().findFirst();
+    }
+
+    @Override
+    public List<Author> listByName(String name) {
+        final String namePattern = "%" + name + "%";
+        return jdbc.query("""
+                SELECT * FROM author
+                WHERE name LIKE ?
+                ORDER BY id
+                """,
+                (rs, i) -> Author.withId(
+                        rs.getLong("id"),
+                        rs.getString("name"),
+                        rs.getString("password"),
+                        rs.getString("salt"),
+                        rs.getString("privilege"),
+                        rs.getBoolean("is_blocked"),
+                        rs.getTimestamp("created_at").toInstant()
+                ), namePattern);
+    }
+
+    @Override
+    public void updateBlockStatusById(long id, boolean block) {
+        jdbc.update("""
+                UPDATE author
+                SET is_blocked = ?
+                WHERE id = ?
+                """,
+                block, id);
     }
 }
