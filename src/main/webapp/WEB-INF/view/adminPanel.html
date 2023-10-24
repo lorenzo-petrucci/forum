@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head th:replace="~{fragments/headerLayout :: layout(~{::title}, ~{::script})}">
         <title>Admin panel</title>
-        <script th:src="@{/assets/adminSearchAuthor.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/adminAuthorTable.js}" type="text/javascript"></script>
     </head>
     <body>
         <div class="container m-3">
@@ -15,31 +15,10 @@
                     <input type="text" id="author-name" class="form-control">
                 </div>
                 <div class="col-auto">
-                    <button id="search-author" class="btn btn-primary">Search</button>
+                    <button data-ref="search-author" class="btn btn-primary">Search</button>
                 </div>
             </div>
-            <table data-ref="author-list" class="table d-none">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Privilege</th>
-                        <th>Created at</th>
-                        <th>Block</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr data-ref="author-template" class="d-none">
-                        <td data-ref="id"></td>
-                        <td data-ref="name"></td>
-                        <td data-ref="privilege"></td>
-                        <td data-ref="created-at"></td>
-                        <td data-ref="block">
-                            <input type="checkbox" data-ref="is-blocked">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <table id="table"></table>
             <button id="modify-blocked-status" class="btn btn-primary d-none">Apply</button>
         </div>
     </body>

@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public record Room(
+        // TODO: 10/24/23 don't need id
         long id,
         UUID uuid,
         String title,

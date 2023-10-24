@@ -47,4 +47,8 @@ public class AuthorDetails implements UserDetails {
     public boolean isEnabled() {
         return !author.isBlocked();
     }
+
+    public long getId() {
+        return author.getId();
+    }
 }

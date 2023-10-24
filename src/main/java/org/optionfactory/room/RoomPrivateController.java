@@ -21,13 +21,12 @@ public class RoomPrivateController {
             @RequestParam int recordPerPage,
             @RequestParam int pageNumber,
             @RequestParam RoomType roomType,
-            @AuthenticationPrincipal AuthorDetails author) {
-        final long authorId = author == null ? 0 : authorFacade.searchByName(author.getUsername()).getId();
-        return roomFacade.list(recordPerPage, pageNumber, authorId, roomType);
+            @AuthenticationPrincipal AuthorDetails authorDetails) {
+        return roomFacade.list(recordPerPage, pageNumber, authorDetails.getId(), roomType);
     }
 
     @PostMapping("/create")
-    public void createRoom(RoomRequest roomRequest) {
-        roomFacade.upsert(roomRequest);
+    public void createRoom(RoomRequest roomRequest, @AuthenticationPrincipal AuthorDetails authorDetails) {
+        roomFacade.upsert(roomRequest, authorDetails.getId());
     }
 }

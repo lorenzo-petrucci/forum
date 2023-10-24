@@ -104,7 +104,7 @@ public class JdbcRoomRepository implements RoomRepository{
     }
 
     @Override
-    public void upsert(RoomRequest roomRequest) {
+    public void upsert(RoomRequest roomRequest, long authorId) { // TODO: 10/24/23 pass Room
         jdbc.update("""
                 INSERT INTO room (uuid, title, author_id, created_at, is_public, is_active)
                 VALUES(?, ?, ?, ?, ?, ?)
@@ -114,7 +114,7 @@ public class JdbcRoomRepository implements RoomRepository{
                 """,
                 roomRequest.uuid(),
                 roomRequest.title(),
-                roomRequest.authorId(),
+                authorId,
                 Timestamp.from(roomRequest.createdAt()),
                 roomRequest.isPublic(),
                 roomRequest.isActive(),

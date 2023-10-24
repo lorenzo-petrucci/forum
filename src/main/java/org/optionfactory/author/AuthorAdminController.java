@@ -18,8 +18,8 @@ public class AuthorAdminController {
         return authorFacade.listByName(name);
     }
 
-    @PostMapping("/block")
-    public void updateAuthorBlockStatus(@RequestParam long id, @RequestParam boolean block) {
+    @PostMapping("/{id}/edit")
+    public void updateAuthorBlockStatus(@PathVariable long id, @RequestParam boolean block) {
         authorFacade.updateBlockStatusById(id, block);
     }
 
