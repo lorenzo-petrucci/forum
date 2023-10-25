@@ -85,13 +85,13 @@ public class JdbcAuthorRepository implements AuthorRepository{
     }
 
     @Override
-    public void updateBlockStatusById(long id, boolean block) {
+    public void updateById(long id, String privilege, boolean isBlocked) {
         jdbc.update("""
                 UPDATE author
-                SET is_blocked = ?
+                SET is_blocked = ?, privilege = ?
                 WHERE id = ?
                 """,
-                block, id);
+                isBlocked, privilege, id);
     }
 
     @Override

@@ -1,21 +1,17 @@
 package org.optionfactory.setup;
 
 import org.optionfactory.author.AuthorDetailsService;
-import org.optionfactory.author.Privileges;
+import org.optionfactory.author.PrivilegeType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
-import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
@@ -39,8 +35,8 @@ public class SecurityConfig {
                         .requestMatchers(mvc.pattern("/")).permitAll()
                         .requestMatchers(mvc.pattern("/public/**")).permitAll()
                         .requestMatchers(mvc.pattern("/assets/public/**")).permitAll()
-                        .requestMatchers(mvc.pattern("/private/**")).hasAuthority(Privileges.USER.name())
-                        .requestMatchers(mvc.pattern("/admin/**")).hasAuthority(Privileges.ADMIN.name())
+                        .requestMatchers(mvc.pattern("/private/**")).hasAuthority(PrivilegeType.USER.name())
+                        .requestMatchers(mvc.pattern("/admin/**")).hasAuthority(PrivilegeType.ADMIN.name())
                         .anyRequest().authenticated()
                 );
         return http.build();

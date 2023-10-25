@@ -5,5 +5,5 @@ public interface AuthorFacade {
     Author searchByName(String name);
     Author searchById(long id);
     BootstrapTableAuthorList listByName(String name, int offset, int limit);
-    void updateBlockStatusById(long id, boolean block);
+    void updateById(long id, String privilegeType, boolean block);
 }

@@ -8,6 +8,6 @@ public interface AuthorRepository {
     Optional<Author> searchByName(String name);
     Optional<Author> searchById(long id);
     List<Author> listByName(String name, int offset, int limit);
-    void updateBlockStatusById(long id, boolean block);
+    void updateById(long id, String privilegeType, boolean block);
     Optional<Integer> count();
 }

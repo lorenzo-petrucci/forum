@@ -29,7 +29,7 @@ public class TransactionalAuthorFacade implements AuthorFacade {
                 authorRequest.username(),
                 passwordEncoder.encode(authorRequest.password()),
                 "salt",
-                Privileges.USER.name(),
+                PrivilegeType.USER.name(),
                 false,
                 Instant.now()
         ));
@@ -52,7 +52,7 @@ public class TransactionalAuthorFacade implements AuthorFacade {
     }
 
     @Override
-    public void updateBlockStatusById(long id, boolean block) {
-        authorRepository.updateBlockStatusById(id, block);
+    public void updateById(long id, String privilege, boolean isBlocked) {
+        authorRepository.updateById(id, privilege, isBlocked);
     }
 }

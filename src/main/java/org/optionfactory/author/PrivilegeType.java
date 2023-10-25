@@ -1,6 +1,6 @@
 package org.optionfactory.author;
 
-public enum Privileges {
+public enum PrivilegeType {
     ADMIN,
     USER
 }

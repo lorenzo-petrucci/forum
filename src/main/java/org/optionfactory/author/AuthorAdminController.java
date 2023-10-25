@@ -1,12 +1,9 @@
 package org.optionfactory.author;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("admin/api/v1/author")
@@ -20,8 +17,8 @@ public class AuthorAdminController {
     }
 
     @PostMapping("/{id}/edit")
-    public void updateAuthorBlockStatus(@PathVariable long id, @RequestParam boolean block) {
-        authorFacade.updateBlockStatusById(id, block);
+    public void updateAuthor(@PathVariable long id, String privilege, boolean isBlocked) {
+        authorFacade.updateById(id, privilege, isBlocked);
     }
 
     @ExceptionHandler(AuthorNotFoundException.class)
