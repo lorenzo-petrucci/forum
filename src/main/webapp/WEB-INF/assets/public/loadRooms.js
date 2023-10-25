@@ -1,21 +1,3 @@
-function loadRooms(apiUrl, roomType='') {
-    $('[data-ref=populated]').remove();
-    $.ajax({
-        type: 'GET',
-        url: apiUrl,
-        data: {
-            'recordPerPage': 10,
-            'pageNumber': 0,
-            'roomType': roomType
-        },
-        success: function(res) {
-            $.each(res, function(i) {
-                populateRoomCard(res[i]);
-            });
-        }
-    });
-};
-
 function populateRoomCard(room) {
     let roomCard = $('[data-ref=room]').clone();
     roomCard.children('[data-ref=author]').text(room.authorName);
