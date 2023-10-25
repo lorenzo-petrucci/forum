@@ -15,7 +15,9 @@ $(document).on('click', '[data-ref=create-room]', function() {
             'isActive': true
         },
         success: function(res) {
-            loadRooms('/forum/private/api/v1/room/list', $('.active').data('ref'));
+            $('.nav-link').removeClass('active');
+            $('[data-ref=owned]').addClass('active');
+            loadRooms('/forum/private/api/v1/room/list', 'owned');
         }
     });
     $('[data-ref=create-room-form]').addClass('d-none');
