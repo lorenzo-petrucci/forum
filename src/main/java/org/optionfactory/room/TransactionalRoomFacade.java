@@ -1,8 +1,10 @@
 package org.optionfactory.room;
 
+import org.optionfactory.author.AuthorDetails;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public class TransactionalRoomFacade implements RoomFacade {
@@ -30,7 +32,16 @@ public class TransactionalRoomFacade implements RoomFacade {
     }
 
     @Override
-    public void upsert(RoomRequest roomRequest, long authorId) {
-        roomRepository.upsert(roomRequest, authorId);
+    public void upsert(RoomRequest roomRequest, AuthorDetails authorDetails) {
+        roomRepository.upsert(new RoomCreation(
+                roomRequest.uuid(),
+                roomRequest.title(),
+                authorDetails.getId(),
+                authorDetails.getUsername(),
+                roomRequest.createdAt(),
+                roomRequest.isPublic(),
+                roomRequest.isActive(),
+                Optional.empty()
+        ));
     }
 }

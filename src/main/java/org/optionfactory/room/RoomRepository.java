@@ -7,5 +7,5 @@ public interface RoomRepository {
     List<Room> listPrivate(int recordPerPage, int pageNumber);
     List<Room> listSubscribed(int recordPerPage, int pageNumber, long authorId);
     List<Room> listOwned(int recordPerPage, int pageNumber, long authorId);
-    void upsert(RoomRequest roomRequest, long authorId);
+    void upsert(RoomCreation roomCreation);
 }

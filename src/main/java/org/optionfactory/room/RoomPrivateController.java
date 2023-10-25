@@ -27,6 +27,6 @@ public class RoomPrivateController {
 
     @PostMapping("/create")
     public void createRoom(RoomRequest roomRequest, @AuthenticationPrincipal AuthorDetails authorDetails) {
-        roomFacade.upsert(roomRequest, authorDetails.getId());
+        roomFacade.upsert(roomRequest, authorDetails);
     }
 }
