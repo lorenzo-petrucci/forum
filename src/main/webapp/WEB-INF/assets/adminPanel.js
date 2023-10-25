@@ -22,6 +22,7 @@ $(document).on('click', '[data-ref=messages]', function() {
 function populateAuthorsTable() {
     $('#table').bootstrapTable({
         pagination: true,
+        sidePagination: 'server',
         search: true,
         rowStyle: blockedAuthorRowStyle,
         url: '/forum/admin/api/v1/author/search',

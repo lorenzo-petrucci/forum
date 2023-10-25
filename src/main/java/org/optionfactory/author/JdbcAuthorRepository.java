@@ -65,12 +65,13 @@ public class JdbcAuthorRepository implements AuthorRepository{
     }
 
     @Override
-    public List<Author> listByName(String name) {
+    public List<Author> listByName(String name, int offset, int limit) {
         final String namePattern = "%" + name + "%";
         return jdbc.query("""
                 SELECT * FROM author
                 WHERE name LIKE ?
                 ORDER BY id
+                LIMIT ? OFFSET ?
                 """,
                 (rs, i) -> Author.withId(
                         rs.getLong("id"),
@@ -80,7 +81,7 @@ public class JdbcAuthorRepository implements AuthorRepository{
                         rs.getString("privilege"),
                         rs.getBoolean("is_blocked"),
                         rs.getTimestamp("created_at").toInstant()
-                ), namePattern);
+                ), namePattern, limit, offset);
     }
 
     @Override
@@ -91,5 +92,15 @@ public class JdbcAuthorRepository implements AuthorRepository{
                 WHERE id = ?
                 """,
                 block, id);
+    }
+
+    @Override
+    public Optional<Integer> count() {
+        return Optional.ofNullable(jdbc.queryForObject("""
+                SELECT COUNT(*)
+                FROM author
+                """,
+                Integer.class)
+        );
     }
 }

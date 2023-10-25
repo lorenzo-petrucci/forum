@@ -4,7 +4,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -47,8 +46,9 @@ public class TransactionalAuthorFacade implements AuthorFacade {
     }
 
     @Override
-    public List<Author> listByName(String name) {
-        return authorRepository.listByName(name);
+    public BootstrapTableAuthorList listByName(String name, int offset, int limit) {
+        final int authorCount = authorRepository.count().orElseThrow();
+        return new BootstrapTableAuthorList(authorCount, authorCount, authorRepository.listByName(name, offset, limit));
     }
 
     @Override

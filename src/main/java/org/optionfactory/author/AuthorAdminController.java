@@ -1,5 +1,6 @@
 package org.optionfactory.author;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,8 @@ public class AuthorAdminController {
     private AuthorFacade authorFacade;
 
     @GetMapping("/search")
-    public List<Author> listAuthors(@RequestParam String search) {
-        return authorFacade.listByName(search);
+    public BootstrapTableAuthorList listAuthors(@RequestParam String search, @RequestParam int offset, @RequestParam int limit) {
+        return authorFacade.listByName(search, offset, limit);
     }
 
     @PostMapping("/{id}/edit")
