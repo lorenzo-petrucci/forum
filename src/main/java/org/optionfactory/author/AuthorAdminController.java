@@ -14,8 +14,8 @@ public class AuthorAdminController {
     private AuthorFacade authorFacade;
 
     @GetMapping("/search")
-    public List<Author> listAuthors(@RequestParam String name) {
-        return authorFacade.listByName(name);
+    public List<Author> listAuthors(@RequestParam String search) {
+        return authorFacade.listByName(search);
     }
 
     @PostMapping("/{id}/edit")
